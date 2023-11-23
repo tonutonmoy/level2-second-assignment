@@ -88,6 +88,7 @@ const updateUser = async (id: number, info: object) => {
   return result;
 };
 
+// delete user
 const deleteUser = async (userId: number) => {
   const result = await User.deleteOne({ userId });
 
