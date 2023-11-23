@@ -43,6 +43,39 @@ const createOrderApi = async (req: Request, res: Response) => {
   }
 };
 
+const getOrderApi = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    const checkUser = await User.isUserExits(Number(userId));
+    if (!checkUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await orderServices.getOrder(Number(userId));
+
+    res.status(400).json({
+      success: true,
+      message: "Order fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Order not fetched successfully!",
+      data: error,
+    });
+  }
+};
 export const orderController = {
   createOrderApi,
+  getOrderApi,
 };
