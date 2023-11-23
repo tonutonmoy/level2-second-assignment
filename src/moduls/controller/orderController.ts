@@ -25,7 +25,7 @@ const createOrderApi = async (req: Request, res: Response) => {
 
     const result = await orderServices.createdOrder(
       Number(userId),
-      zod as IOrder
+      zod as unknown as IOrder
     );
 
     res.status(400).json({
