@@ -52,7 +52,8 @@ const updateUser = async (id: number, info: object) => {
     isActive,
     hobbies,
     address,
-  } = info;
+    orders,
+  } = info as IUser;
 
   const result = await User.findOneAndUpdate(
     { userId: id },
@@ -67,7 +68,7 @@ const updateUser = async (id: number, info: object) => {
         isActive,
         hobbies,
         address,
-        orders: info?.orders,
+        orders: orders,
       },
     },
     {

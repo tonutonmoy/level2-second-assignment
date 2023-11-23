@@ -49,7 +49,7 @@ const findUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
 });
 // update single user data
 const updateUser = (id, info) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, username, password, fullName, age, email, isActive, hobbies, address, } = info;
+    const { userId, username, password, fullName, age, email, isActive, hobbies, address, orders, } = info;
     const result = yield userModel_1.default.findOneAndUpdate({ userId: id }, {
         $set: {
             userId,
@@ -61,7 +61,7 @@ const updateUser = (id, info) => __awaiter(void 0, void 0, void 0, function* () 
             isActive,
             hobbies,
             address,
-            orders: info === null || info === void 0 ? void 0 : info.orders,
+            orders: orders,
         },
     }, {
         new: true,
