@@ -9,6 +9,13 @@ export const Orders = z
     })
   )
   .optional();
+
+export const OrderObject = z.object({
+  productName: z.string(),
+  price: z.number(),
+  quantity: z.number(),
+});
+
 export const UserZodValidation = z.object({
   userId: z.number(),
   username: z.string(),

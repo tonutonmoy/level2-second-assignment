@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { userServices } from "../services/userServices";
 import { UserZodValidation } from "../validation/zodValidation";
 import User from "../model/userModel";
+import { IUser } from "../interface/userInterFace";
 
 const createUserAPI = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ const createUserAPI = async (req: Request, res: Response) => {
 
     const zod = UserZodValidation.parse(data);
 
-    const result = await userServices.createUser(zod);
+    const result = await userServices.createUser(zod as IUser);
 
     res.status(400).json({
       success: true,

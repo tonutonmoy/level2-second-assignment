@@ -1,7 +1,8 @@
+import { IUser } from "../interface/userInterFace";
 import User from "../model/userModel";
 
 // create user
-const createUser = async (data: object) => {
+const createUser = async (data: IUser) => {
   const createdUser = await User.create(data);
   const result = await User.findById(createdUser._id).select("-password");
 

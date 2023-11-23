@@ -1,5 +1,6 @@
 import express from "express";
 import { userController } from "../controller/userController";
+import { orderController } from "../controller/orderController";
 
 const router = express.Router();
 
@@ -8,5 +9,6 @@ router.get("/", userController.getUserAPI);
 router.get("/:userId", userController.getSingleUserAPI);
 router.put("/:userId", userController.updateSingleUserAPI);
 router.delete("/:userId", userController.deleteSingleUserAPI);
+router.put("/:userId/orders", orderController.createOrderApi);
 
 export const allRoutes = router;
