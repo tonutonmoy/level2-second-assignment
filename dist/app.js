@@ -11,6 +11,6 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/api/users", router_1.allRoutes);
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Hello NEXT LEVEL");
 });
 exports.default = app;

@@ -9,7 +9,7 @@ app.use(express.json());
 app.use("/api/users", allRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("Hello NEXT LEVEL");
 });
 
 export default app;
