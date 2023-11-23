@@ -22,7 +22,45 @@ const getOrder = async (userId: number) => {
   return result;
 };
 
+const getTotalPrice = async (userId: number) => {
+  const data = await User.aggregate([
+    {
+      $match: {
+        userId: userId,
+      },
+    },
+    {
+      $unwind: "$orders",
+    },
+    {
+      $addFields: {
+        totalQuantity: { $multiply: ["$orders.quantity", "$orders.price"] },
+      },
+    },
+    {
+      $group: {
+        _id: "$userId",
+        totalPrice: { $sum: "$totalQuantity" },
+      },
+    },
+  ]);
+
+  if (data.length === 0) {
+    return "user have no orders";
+  }
+  console.log(data);
+
+  const totalPrice = data[0].totalPrice;
+
+  console.log(totalPrice);
+
+  const result = { totalPrice };
+
+  return result;
+};
+
 export const orderServices = {
   createdOrder,
   getOrder,
+  getTotalPrice,
 };

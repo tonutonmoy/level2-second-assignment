@@ -28,14 +28,14 @@ const createOrderApi = async (req: Request, res: Response) => {
       zod as unknown as IOrder
     );
 
-    res.status(400).json({
+    res.status(200).json({
       success: true,
       message: "Order created successfully!",
       data: null,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: "Order not created successfully!",
       data: error,
@@ -61,16 +61,48 @@ const getOrderApi = async (req: Request, res: Response) => {
 
     const result = await orderServices.getOrder(Number(userId));
 
-    res.status(400).json({
+    res.status(200).json({
       success: true,
       message: "Order fetched successfully!",
       data: result,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: "Order not fetched successfully!",
+      data: error,
+    });
+  }
+};
+const getTotalPriceApi = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    const checkUser = await User.isUserExits(Number(userId));
+    if (!checkUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await orderServices.getTotalPrice(Number(userId));
+
+    res.status(200).json({
+      success: true,
+      message: "Total price calculated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      success: false,
+      message: "Total price calculated not successfully!",
       data: error,
     });
   }
@@ -78,4 +110,5 @@ const getOrderApi = async (req: Request, res: Response) => {
 export const orderController = {
   createOrderApi,
   getOrderApi,
+  getTotalPriceApi,
 };

@@ -11,5 +11,6 @@ router.put("/:userId", userController.updateSingleUserAPI);
 router.delete("/:userId", userController.deleteSingleUserAPI);
 router.put("/:userId/orders", orderController.createOrderApi);
 router.get("/:userId/orders", orderController.getOrderApi);
+router.get("/:userId/orders/total-price", orderController.getTotalPriceApi);
 
 export const allRoutes = router;
