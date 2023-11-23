@@ -79,8 +79,79 @@ const getSingleUserAPI = async (req: Request, res: Response) => {
   }
 };
 
+const updateSingleUserAPI = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId;
+    const info = req.body;
+
+    const checkUser = await User.isUserExits(Number(id));
+
+    if (!checkUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await userServices.updateUser(Number(id), info);
+
+    res.status(400).json({
+      success: true,
+      message: "User  updated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "User not updated successfully!",
+      data: error,
+    });
+  }
+};
+
+const deleteSingleUserAPI = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId;
+
+    const checkUser = await User.isUserExits(Number(id));
+
+    if (!checkUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await userServices.deleteUser(Number(id));
+
+    res.status(400).json({
+      success: true,
+      message: "User deleted successfully!",
+      data: null,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "User not deleted successfully!",
+      data: error,
+    });
+  }
+};
+
 export const userController = {
   createUserAPI,
   getUserAPI,
   getSingleUserAPI,
+  updateSingleUserAPI,
+  deleteSingleUserAPI,
 };
